@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 
 namespace ClassLibraryPerson
 {
@@ -51,7 +52,8 @@ namespace ClassLibraryPerson
 
         public virtual void Print()
         {
-            Console.Write("{0} {1} (вік {2}), тел.{3}", Name, Surname, Age, Phone);
+            Console.Write("{0,-10} {1,-15} | (вік {2,3}) | тел.{3}",
+                Name, Surname, Age, Phone);
         }
     }
 }

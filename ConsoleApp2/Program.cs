@@ -29,6 +29,7 @@ namespace MainApp
                     Console.WriteLine("7. Завантажити з файлу");
                     Console.WriteLine("8. Сортування групи");
                     Console.WriteLine("9. Створити клон групи");
+                    Console.WriteLine("10. Перебір через IEnumerator (foreach)");
                     Console.WriteLine("0. Вихід");
                     Console.Write("Ваш вибір: ");
 
@@ -155,6 +156,17 @@ namespace MainApp
                             }
 
                             break;
+
+                        case "10":
+                            Console.WriteLine("\nПеребір групи через foreach:");
+
+                            foreach (Student s in group)
+                            {
+                                s.Print();
+                            }
+
+                            break;
+
                         case "0":
                             return;
 
@@ -170,38 +182,61 @@ namespace MainApp
             }
         }
 
+        static string ReadString(string message)
+        {
+            while (true)
+            {
+                Console.Write(message);
+                string input = Console.ReadLine();
+
+                if (!string.IsNullOrWhiteSpace(input))
+                    return input;
+
+                Console.WriteLine("Поле не може бути порожнім!");
+            }
+        }
+
+        static int ReadInt(string message)
+        {
+            int value;
+            while (true)
+            {
+                Console.Write(message);
+                if (int.TryParse(Console.ReadLine(), out value))
+                    return value;
+
+                Console.WriteLine("Введіть коректне число!");
+            }
+        }
+
+        static double ReadDouble(string message)
+        {
+            double value;
+            while (true)
+            {
+                Console.Write(message);
+
+                if (double.TryParse(Console.ReadLine(), out value) && value >= 0 && value <= 100)
+                    return value;
+
+                Console.WriteLine("Введіть число від 0 до 100!");
+            }
+        }
+
         static void AddStudent(Academy_Group group)
         {
-            
             try
             {
-                Console.Write("Ім'я: ");
-                string name = Console.ReadLine();
-
-                Console.Write("Прізвище: ");
-                string surname = Console.ReadLine();
-
-                Console.Write("Вік: ");
-                if (!int.TryParse(Console.ReadLine(), out int age))
-                {
-                    Console.WriteLine("Невірний вік!");
-                    return;
-                }
-
-                Console.Write("Телефон: ");
-                string phone = Console.ReadLine();
-
-                Console.Write("GPA: ");
-                if (!double.TryParse(Console.ReadLine(), out double gpa))
-                {
-                    Console.WriteLine("Невірний GPA!");
-                    return;
-                }
-
-                Console.Write("Група: ");
-                string groupNum = Console.ReadLine();
+                string name = ReadString("Ім'я: ");
+                string surname = ReadString("Прізвище: ");
+                int age = ReadInt("Вік: ");
+                string phone = ReadString("Телефон: ");
+                double gpa = ReadDouble("GPA: ");
+                string groupNum = ReadString("Група: ");
 
                 group.Add(new Student(name, surname, age, phone, gpa, groupNum));
+
+                Console.WriteLine("Студента додано!");
             }
             catch (Exception ex)
             {
@@ -213,38 +248,20 @@ namespace MainApp
         {
             try
             {
-                Console.Write("Введіть прізвище студента для редагування: ");
-                string surname = Console.ReadLine();
+                string surname = ReadString("Введіть прізвище студента для редагування: ");
 
-                Console.WriteLine("Введіть нові дані:");
+                Console.WriteLine("\nВведіть нові дані:");
 
-                Console.Write("Ім'я: ");
-                string name = Console.ReadLine();
-
-                Console.Write("Прізвище: ");
-                string newSurname = Console.ReadLine();
-
-                Console.Write("Вік: ");
-                if (!int.TryParse(Console.ReadLine(), out int age))
-                {
-                    Console.WriteLine("Невірний вік!");
-                    return;
-                }
-
-                Console.Write("Телефон: ");
-                string phone = Console.ReadLine();
-
-                Console.Write("GPA: ");
-                if (!double.TryParse(Console.ReadLine(), out double gpa))
-                {
-                    Console.WriteLine("Невірний GPA!");
-                    return;
-                }
-
-                Console.Write("Група: ");
-                string groupNum = Console.ReadLine();
+                string name = ReadString("Ім'я: ");
+                string newSurname = ReadString("Прізвище: ");
+                int age = ReadInt("Вік: ");
+                string phone = ReadString("Телефон: ");
+                double gpa = ReadDouble("GPA: ");
+                string groupNum = ReadString("Група: ");
 
                 group.Edit(surname, new Student(name, newSurname, age, phone, gpa, groupNum));
+
+                Console.WriteLine("Дані оновлено!");
             }
             catch (Exception ex)
             {

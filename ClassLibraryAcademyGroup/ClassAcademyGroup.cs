@@ -5,10 +5,11 @@ using System.IO;
 
 namespace ClassLibraryAcademyGroup
 {
-    public class Academy_Group: ICloneable
+    public class Academy_Group: ICloneable, IEnumerable
     {
         private Student[] students;
         private int count;
+        int curpos = -1;
 
         public int Count => count;
 
@@ -85,10 +86,9 @@ namespace ClassLibraryAcademyGroup
                 return;
             }
 
-            for (int i = 0; i < count; i++)
+            foreach (Student student in this)
             {
-                Console.WriteLine($"\nСтудент #{i + 1}:");
-                students[i].Print();
+                student.Print();
             }
         }
 
@@ -163,6 +163,13 @@ namespace ClassLibraryAcademyGroup
             }
 
             return copy;
+        }
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < count; i++)
+            {
+                yield return students[i];
+            }
         }
 
         public void Sort(IComparer comparer)

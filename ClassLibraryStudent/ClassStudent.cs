@@ -34,7 +34,7 @@ namespace ClassLibraryStudent
         public override void Print()
         {
             base.Print();
-            Console.WriteLine(" Середній бал (GPA): {0}. Номер групи: {1}", GPA, GroupNumber);
+            Console.WriteLine(" | Середній бал (GPA): {0}. | Номер групи: {1}", GPA, GroupNumber);
         }
 
         public class SortBySurname : IComparer
