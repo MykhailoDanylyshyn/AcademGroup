@@ -27,6 +27,8 @@ namespace MainApp
                     Console.WriteLine("5. Пошук студента");
                     Console.WriteLine("6. Зберегти у файл");
                     Console.WriteLine("7. Завантажити з файлу");
+                    Console.WriteLine("8. Сортування групи");
+                    Console.WriteLine("9. Створити клон групи");
                     Console.WriteLine("0. Вихід");
                     Console.Write("Ваш вибір: ");
 
@@ -68,6 +70,91 @@ namespace MainApp
                             Console.WriteLine("Завантажено.");
                             break;
 
+                        case "8":
+                            Console.WriteLine("\nОберіть критерій сортування:");
+                            Console.WriteLine("1. За прізвищем");
+                            Console.WriteLine("2. За віком");
+                            Console.WriteLine("3. За GPA");
+                            Console.WriteLine("4. За номером групи");
+                            Console.Write("Ваш вибір: ");
+
+                            string sortChoice = Console.ReadLine();
+
+                            switch (sortChoice)
+                            {
+                                case "1":
+                                    group.Sort(new Student.SortBySurname());
+                                    Console.WriteLine("Відсортовано за прізвищем.");
+                                    break;
+
+                                case "2":
+                                    group.Sort(new Student.SortByAge());
+                                    Console.WriteLine("Відсортовано за віком.");
+                                    break;
+
+                                case "3":
+                                    group.Sort(new Student.SortByGPA());
+                                    Console.WriteLine("Відсортовано за GPA.");
+                                    break;
+
+                                case "4":
+                                    group.Sort(new Student.SortByGroupNumber());
+                                    Console.WriteLine("Відсортовано за номером групи.");
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Невірний вибір сортування!");
+                                    break;
+                            }
+
+                            group.Print();
+
+                            Console.Write("\nЗберегти зміни у файл? (y/n): ");
+                            string saveChoice = Console.ReadLine();
+
+                            if (saveChoice != null && saveChoice.ToLower() == "y")
+                            {
+                                group.Save(path);
+                                Console.WriteLine("Файл перезаписано.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Зміни не збережено у файл.");
+                            }
+
+                            break;
+
+                        case "9":
+                            Academy_Group clonedGroup = (Academy_Group)group.Clone();
+
+                            Console.WriteLine("Клон групи створено.");
+                            Console.WriteLine("\n--- Клон групи ---");
+                            clonedGroup.Print();
+
+                            Console.Write("\nЗберегти клон у файл? (y/n): ");
+                            string cloneSaveChoice = Console.ReadLine();
+
+                            if (cloneSaveChoice?.ToLower() == "y")
+                            {
+                                Console.Write("Введіть ім'я файлу для клону: ");
+                                string newPath = Console.ReadLine();
+
+                                if (!string.IsNullOrWhiteSpace(newPath))
+                                {
+                                    clonedGroup.Save(newPath);
+                                    Console.WriteLine("Клон збережено у файл.");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Невірне ім'я файлу.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Клон не збережено.");
+                            }
+
+                            break;
                         case "0":
                             return;
 
@@ -85,6 +172,7 @@ namespace MainApp
 
         static void AddStudent(Academy_Group group)
         {
+            
             try
             {
                 Console.Write("Ім'я: ");
@@ -163,5 +251,7 @@ namespace MainApp
                 Console.WriteLine("Помилка при редагуванні: " + ex.Message);
             }
         }
+
+
     }
 }

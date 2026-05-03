@@ -1,5 +1,6 @@
-﻿using System;
-using ClassLibraryPerson;
+﻿using ClassLibraryPerson;
+using System;
+using System.Collections;
 
 namespace ClassLibraryStudent
 {
@@ -26,15 +27,55 @@ namespace ClassLibraryStudent
                             double gpa, string groupNumber)
             : base(name, surname, age, phone)
         {
-            grade_point_average = gpa;
-            group_number = groupNumber;
+            GPA = gpa;
+            GroupNumber = groupNumber;
         }
 
         public override void Print()
         {
             base.Print();
-            Console.WriteLine($"Середній бал (GPA): {grade_point_average}");
-            Console.WriteLine($"Номер групи: {group_number}");
+            Console.WriteLine(" Середній бал (GPA): {0}. Номер групи: {1}", GPA, GroupNumber);
         }
+
+        public class SortBySurname : IComparer
+        {
+            int IComparer.Compare(object obj1, object obj2)
+            {
+                if (obj1 is Student && obj2 is Student)
+                    return ((obj1 as Student).surname).CompareTo((obj2 as Student).surname);
+
+                throw new NotImplementedException();
+            }
+        }
+        public class SortByAge : IComparer
+        {
+            int IComparer.Compare(object obj1, object obj2)
+            {
+                if (obj1 is Student && obj2 is Student)
+                    return ((obj1 as Student).age).CompareTo((obj2 as Student).age);
+
+                throw new NotImplementedException();
+            }
+        }
+        public class SortByGPA : IComparer
+        {
+            int IComparer.Compare(object obj1, object obj2)
+            {
+                if (obj1 is Student && obj2 is Student)
+                    return ((obj1 as Student).grade_point_average).CompareTo((obj2 as Student).grade_point_average);
+
+                throw new NotImplementedException();
+            }
+        }
+        public class SortByGroupNumber : IComparer
+        {
+            int IComparer.Compare(object obj1, object obj2)
+            {
+                if (obj1 is Student && obj2 is Student)
+                    return ((obj1 as Student).group_number).CompareTo((obj2 as Student).group_number);
+
+                throw new NotImplementedException();
+            }
+        }        
     }
 }

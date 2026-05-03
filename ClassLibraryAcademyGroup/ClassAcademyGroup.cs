@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ClassLibraryStudent;
+using System;
+using System.Collections;
 using System.IO;
-using ClassLibraryStudent;
 
 namespace ClassLibraryAcademyGroup
 {
-    public class Academy_Group
+    public class Academy_Group: ICloneable
     {
         private Student[] students;
         private int count;
@@ -65,7 +66,12 @@ namespace ClassLibraryAcademyGroup
             {
                 if (students[i].Surname == surname)
                 {
-                    students[i] = newData;
+                    students[i].Name = newData.Name;
+                    students[i].Surname = newData.Surname;
+                    students[i].Age = newData.Age;
+                    students[i].Phone = newData.Phone;
+                    students[i].GPA = newData.GPA;
+                    students[i].GroupNumber = newData.GroupNumber;
                     return;
                 }
             }
@@ -135,5 +141,34 @@ namespace ClassLibraryAcademyGroup
                 Add(student);
             }
         }
+
+        public object Clone()
+        {
+            Academy_Group copy = new Academy_Group();
+
+            for (int i = 0; i < count; i++)
+            {
+                Student s = students[i];
+
+                Student newStudent = new Student(
+                    s.Name,
+                    s.Surname,
+                    s.Age,
+                    s.Phone,
+                    s.GPA,
+                    s.GroupNumber
+                );
+
+                copy.Add(newStudent);
+            }
+
+            return copy;
+        }
+
+        public void Sort(IComparer comparer)
+        {
+            Array.Sort(students, comparer);
+        }
+
     }
 }

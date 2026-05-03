@@ -33,7 +33,13 @@ namespace ClassLibraryPerson
             set { phone = value; }
         }
 
-        public Person() { }
+        public Person() 
+        {
+            name = " ";
+            surname = " ";
+            age = 0;
+            phone = " ";
+        }
 
         public Person(string Name, string Surname, int Age, string Phone)
         {
@@ -45,10 +51,7 @@ namespace ClassLibraryPerson
 
         public virtual void Print()
         {
-            Console.WriteLine($"Ім'я: {name}");
-            Console.WriteLine($"Прізвище: {surname}");
-            Console.WriteLine($"Вік: {age}");
-            Console.WriteLine($"Телефон: {phone}");
+            Console.Write("{0} {1} (вік {2}), тел.{3}", Name, Surname, Age, Phone);
         }
     }
 }
